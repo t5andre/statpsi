@@ -67,7 +67,7 @@ server <- function(input, output, session) {
     output$probDist <- renderPlot({
 
          observeEvent((0 == input$media),{
-             updateNumericInput(session, "dp", value = round(input$media/6,0))
+             updateNumericInput(session, "dp", value = round(abs(input$media)/6,0)) #abs() pra evitar DPs negativos
              updateNumericInput(session, "valor_u", value = input$media)
              updateNumericInput(session, "lim_inf", value = round(input$media-input$media/6,0))
              updateNumericInput(session, "lim_sup", value = round(input$media+input$media/6,0))
