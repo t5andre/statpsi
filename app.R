@@ -8,23 +8,15 @@ ui <- fluidPage(
     titlePanel(h1("Curva normal"), windowTitle = "Curva Normal"),
     
     # Painel
-    fluidRow(
-        column(width = 2,
+    fluidRow(column(width = 4,
                radioButtons("calc",
                             "Cálculo",
                             choices = c("Probabilidade abaixo de um escore",
                                         "Probabilidade acima de um escore",
                                         "Probabilidade entre dois valores",
                                         "Limites para um intervalo de confiança"))
-        ),
-        column(width = 3,
-               numericInput("escore",
-                            "Escore",
-                            0,
-                            min = -Inf,
-                            max = Inf)      
-        ),
-        column(width = 3,
+               ),
+             column(width = 4,
                numericInput("media",
                             "Média",
                             0,
@@ -34,9 +26,14 @@ ui <- fluidPage(
                             "Desvio-padrão",
                             1,
                             min = -Inf,
-                            max = Inf)
-        ),
-        column(width = 3,
+                            max = Inf),
+               conditionalPanel("input.calc == 'Probabilidade abaixo de um escore' || input.calc == 'Probabilidade acima de um escore' ",
+                                numericInput("escore",
+                                             "Escore",
+                                             0,
+                                             min = -Inf,
+                                             max = Inf)),
+               conditionalPanel("input.calc == 'Probabilidade entre dois valores'",
                numericInput("lim_inf",
                             "Limite inferior do intervalo",
                             -1,
@@ -46,16 +43,14 @@ ui <- fluidPage(
                             "Limite superior do intervalo",
                             1,
                             min = -Inf,
-                            max = Inf)
-               
-        ),
-        column(width = 3,
+                            max = Inf)),
+               conditionalPanel("input.calc == 'Limites para um intervalo de confiança'",
                numericInput("ic_perc",
                             "Percentual do Intervalo de confiança",
                             95,
                             min = 1,
-                            max = 99)
-    )
+                            max = 99))
+               )
     ),
     mainPanel(
         plotOutput("probDist"),
@@ -72,7 +67,7 @@ server <- function(input, output, session) {
              updateNumericInput(session, "lim_inf", value = round(input$media-input$media/6,0))
              updateNumericInput(session, "lim_sup", value = round(input$media+input$media/6,0))
          }, ignoreInit = TRUE)
-         
+        
          menor_q <- stat_function(fun = dnorm,
                                   args = list(mean = input$media, sd = input$dp),
                                   xlim = c(-4*input$dp+input$media,input$escore),
