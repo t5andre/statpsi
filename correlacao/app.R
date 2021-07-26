@@ -9,8 +9,6 @@ if(!require("faux"))
     install.packages("faux"); library(faux)
 if(!require("ggplot2"))
     install.packages("ggplot2"); library(ggplot2)
-if(!require("here"))
-    install.packages("here"); library(here)
 if(!require("shiny"))
     install.packages("shiny"); library(shiny)
 
