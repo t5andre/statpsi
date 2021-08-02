@@ -1,5 +1,6 @@
 library(shiny)
 library(ggplot2)
+options(OutDec = ",")
 
 app_theme <- theme(axis.text.y = element_blank(),
                    panel.grid = element_blank(),

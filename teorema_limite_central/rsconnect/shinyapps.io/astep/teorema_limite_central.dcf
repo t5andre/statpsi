@@ -1,0 +1,13 @@
+name: teorema_limite_central
+title: teorema_limite_central
+username:
+account: astep
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4354975
+bundleId: 4881683
+url: https://astep.shinyapps.io/teorema_limite_central/
+when: 1627941011.1479
+lastSyncTime: 1627941011.1479
+asMultiple: FALSE
+asStatic: FALSE

@@ -1,0 +1,13 @@
+name: tabela_normal
+title: tabela_normal
+username:
+account: astep
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4367211
+bundleId: 4884426
+url: https://astep.shinyapps.io/tabela_normal/
+when: 1628009638.13883
+lastSyncTime: 1628009638.13883
+asMultiple: FALSE
+asStatic: FALSE
