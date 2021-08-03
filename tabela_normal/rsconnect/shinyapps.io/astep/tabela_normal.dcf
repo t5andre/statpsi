@@ -5,9 +5,16 @@ account: astep
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4367211
+<<<<<<< HEAD
 bundleId: 4884426
 url: https://astep.shinyapps.io/tabela_normal/
 when: 1628009638.13883
 lastSyncTime: 1628009638.13883
+=======
+bundleId: 4881637
+url: https://astep.shinyapps.io/tabela_normal/
+when: 1627940026.26854
+lastSyncTime: 1627940026.26854
+>>>>>>> 119055378c56178b59e77dade3260dcbc83b813e
 asMultiple: FALSE
 asStatic: FALSE

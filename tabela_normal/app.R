@@ -1,6 +1,7 @@
 library(shiny)
 library(ggplot2)
 options(OutDec = ",")
+<<<<<<< HEAD
 
 app_theme <- theme(axis.text.y = element_blank(),
                    panel.grid = element_blank(),
@@ -73,6 +74,8 @@ plot_params <- function(media = 0,
              }
         
     }
+=======
+>>>>>>> 119055378c56178b59e77dade3260dcbc83b813e
 
 ui <- fluidPage(
     
@@ -148,13 +151,21 @@ server <- function(input, output, session) {
         #abs() pra evitar DPs negativos
         if (input$media < 4){
         updateNumericInput(session, "dp", value = 1)
+<<<<<<< HEAD
         updateNumericInput(session, "escore", value = round(input$media,0))
+=======
+        updateNumericInput(session, "escore", value = integer(input$media))
+>>>>>>> 119055378c56178b59e77dade3260dcbc83b813e
         updateNumericInput(session, "lim_inf", value = input$media-2)
         updateNumericInput(session, "lim_sup", value = input$media+2)}
        
          else{
             updateNumericInput(session, "dp", value = round(abs(input$media)/6,0),min = 1)
+<<<<<<< HEAD
             updateNumericInput(session, "escore", value = round(input$media,0) )
+=======
+            updateNumericInput(session, "escore", value = integer(input$media) )
+>>>>>>> 119055378c56178b59e77dade3260dcbc83b813e
             updateNumericInput(session, "lim_inf", value = round(input$media-(input$media/6),0))
             updateNumericInput(session, "lim_sup", value = round(input$media+(input$media/6),0))
             }
@@ -162,6 +173,7 @@ server <- function(input, output, session) {
     }, ignoreInit = TRUE)
     
     output$probDist <- renderPlot({
+<<<<<<< HEAD
         
         plot_params(media = input$media,
                     sd = input$dp,
@@ -174,6 +186,55 @@ server <- function(input, output, session) {
                     ic_perc = input$ic_perc) +
             theme_minimal() +
             app_theme + 
+=======
+
+         
+        
+         menor_q <- stat_function(fun = dnorm,
+                                  args = list(mean = input$media, sd = input$dp),
+                                  xlim = c(-4*input$dp+input$media,input$escore),
+                                  geom = "area", fill = "#006495ff", alpha = .3, color = "#006495")
+         
+         maior_q <- stat_function(fun = dnorm,
+                                  args = list(mean = input$media, sd = input$dp),
+                                  xlim = c(input$escore,4*input$dp+input$media),
+                                  geom = "area", fill = "#006495ff", alpha = .3, color = "#006495")
+         
+         entre <- stat_function(fun = dnorm,
+                                args = list(mean = input$media, sd = input$dp),
+                                xlim = c(input$lim_inf,input$lim_sup),
+                                geom = "area", fill = "#006495ff", alpha = .3, color = "#006495")
+         
+         lim_ic <- stat_function(fun = dnorm,
+                                 args = list(mean = input$media, sd = input$dp),
+                                 xlim = c(input$media-input$dp*qnorm((100-input$ic_perc)/200),
+                                          input$media-input$dp*qnorm((100+input$ic_perc)/200)),
+                                 geom = "area", fill = "#006495ff", alpha = .3, color = "#006495")
+        
+        ggplot() +
+            stat_function(geom = "area", fun = dnorm, args = list(mean = input$media, sd = input$dp),
+                          color = "#eb968e", alpha = 0.2, xlim = c(input$media-input$dp*4,input$media+input$dp*4))  +
+            {if (input$calc == "Probabilidade abaixo de um escore") {menor_q}
+                else if(input$calc == "Probabilidade acima de um escore") {maior_q}
+                else if(input$calc == "Probabilidade entre dois valores") {entre}
+                else if(input$calc == "Limites para um intervalo de confiança") {lim_ic}
+            }+ {if (input$calc %in% c("Probabilidade abaixo de um escore",
+                                      "Probabilidade acima de um escore"))
+                                     {geom_vline(aes(xintercept = input$escore), linetype = "dashed")}
+                
+                else if(input$calc == "Probabilidade entre dois valores")
+                {geom_vline(aes(xintercept = c(input$lim_inf,input$lim_sup)),
+                                linetype = "dashed")}
+                
+                else if(input$calc == "Limites para um intervalo de confiança")
+                {geom_vline(aes(xintercept = c(input$media-input$dp*qnorm((100-input$ic_perc)/200),
+                                               input$media-input$dp*qnorm((100+input$ic_perc)/200))),
+                            linetype = "dashed")}
+                } +
+            theme_classic() +
+            theme(axis.line.y = element_blank(), axis.text.y = element_blank(),
+                  axis.ticks.y = element_blank(), axis.title = element_blank()) +
+>>>>>>> 119055378c56178b59e77dade3260dcbc83b813e
             scale_x_continuous(breaks = seq(input$media-input$dp*3,input$media+input$dp*3,input$dp))
             
 
