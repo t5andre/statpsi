@@ -4,17 +4,10 @@ username:
 account: astep
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
-appId: 4354975
-<<<<<<< HEAD
-bundleId: 4881683
+appId: 4452702
+bundleId: 4884629
 url: https://astep.shinyapps.io/teorema_limite_central/
-when: 1627941011.1479
-lastSyncTime: 1627941011.1479
-=======
-bundleId: 4881294
-url: https://astep.shinyapps.io/teorema_limite_central/
-when: 1627932923.55594
-lastSyncTime: 1627932923.55594
->>>>>>> 119055378c56178b59e77dade3260dcbc83b813e
+when: 1628013519.30704
+lastSyncTime: 1628013519.30704
 asMultiple: FALSE
 asStatic: FALSE
