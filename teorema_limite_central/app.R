@@ -103,8 +103,8 @@ server <- function(input, output) {
     ggplot(data.frame(pop())) +
     geom_histogram(aes(x = data.frame(pop())[,1]),
                      bins = 70,
-                     colour = "#006495",
-                     fill = "#eb968e") +
+                     colour = "#eb968e",
+                     fill = "#2889b9") +
         theme_minimal() +
             app_theme +
         labs(title = "Distribuição populacional (N = 5000)",
