@@ -65,7 +65,9 @@ corr_plot <- function(corr = 0,
 ui <- fluidPage(
 
     # Application title
-    titlePanel("Visualizando correlações"),
+    titlePanel(h1("Visualizando correlações",
+                  align = "center"),
+               windowTitle = "Correlação"),
 
     # Sidebar with inputs ====
     sidebarLayout(
@@ -90,11 +92,8 @@ ui <- fluidPage(
             # Conditional Panels ====
             conditionalPanel("input.corr < 0.1 &
                              input.corr > -0.1",
-                             h5(strong("Parece que X e Y NÃO ESTÃO 
-                                       correlacionados.")),
-                             h6("Baseando-se em Cohen (1988), isso acontece
-                             quando o valor absoluto da correlação é menor que
-                             0.1. Se estamos medindo a correlação com o r de
+                             
+                             h6("Se estamos medindo a correlação com o r de
                              Pearson, uma correlação de no máximo 0.1 indica
                              que ambas as variáveis compartilham menos de 1% 
                              de sua variância."),
@@ -108,11 +107,7 @@ ui <- fluidPage(
             
             conditionalPanel("input.corr >= 0.1 & input.corr < 0.3|
                              input.corr <= -0.1 & input.corr > -0.3",
-                             h5(strong('Parece haver uma correlação FRACA entre
-                                       X e Y.')),
-                             h6("Baseando-se em Cohen (1988), isso acontece
-                             quando o valor absoluto da correlação é maior ou
-                             igual a 0.1. Se estamos medindo a correlação com o r de
+                             h6("Se estamos medindo a correlação com o r de
                              Pearson, uma correlação de no mínimo 0.1 indica
                              que ambas as variáveis compartilham pelo menos 1% 
                              de sua variância."),
@@ -126,11 +121,7 @@ ui <- fluidPage(
             
             conditionalPanel("input.corr >= 0.3 & input.corr < 0.5|
                              input.corr <= -0.3 & input.corr > -0.5",
-                             h5(strong('Parece haver uma correlação MODERADA
-                                       entre X e Y.')),
-                             h6("Baseando-se em Cohen (1988), isso acontece
-                             quando o valor absoluto da correlação é maior ou
-                             igual a 0.3. Se estamos medindo a correlação com o 
+                             h6("Se estamos medindo a correlação com o 
                              r de Pearson, uma correlação de no mínimo 0.3 
                              indica que ambas as variáveis compartilham pelo 
                              menos 9% de sua variância."),
@@ -142,11 +133,7 @@ ui <- fluidPage(
             
             conditionalPanel("input.corr >= 0.5 & input.corr < 0.7|
                              input.corr <= -0.5 & input.corr > -0.7",
-                             h5(strong('Parece haver uma correlação FORTE entre
-                                       X e Y.')),
-                             h6("Baseando-se em Cohen (1988), isso acontece
-                             quando o valor absoluto da correlação é maior ou
-                             igual a 0.5. Se estamos medindo a correlação com o 
+                             h6("Se estamos medindo a correlação com o 
                              r de Pearson, uma correlação de no mínimo 0.5 
                              indica que ambas as variáveis compartilham pelo 
                              menos 25% de sua variância."),
@@ -158,19 +145,6 @@ ui <- fluidPage(
             
             conditionalPanel("input.corr >= 0.7 & input.corr < 0.9 |
                              input.corr <= -0.7 & input.corr > -0.9 ",
-                             h5(strong('Parece haver uma correlação FORTE entre
-                                       X e Y.')),
-                             h6("Baseando-se em Cohen (1988), isso acontece
-                             quando o valor absoluto da correlação é maior ou
-                             igual a 0.5. Se estamos medindo a correlação com o 
-                             r de Pearson, uma correlação de no mínimo 0.5 
-                             indica que ambas as variáveis compartilham pelo 
-                             menos 25% de sua variância."),
-                             
-                             h6("Conseguimos o valor de pelo menos 25% 
-                             multiplicando o valor da correlação r por ele mesmo
-                             (r*r = r²). Assim, se 
-                             r = 0.5, r² = 0.5 * 0.5 = 0.25."),
                              
                              h6("Quando a correlação for maior ou igual a 0.7,
                                 quase metade da variância entre as duas 
@@ -182,19 +156,6 @@ ui <- fluidPage(
             
             conditionalPanel("input.corr >= 0.9 |
                              input.corr <= -0.9",
-                             h5(strong('Parece haver uma correlação FORTE entre
-                                       X e Y.')),
-                             h6("Baseando-se em Cohen (1988), isso acontece
-                             quando o valor absoluto da correlação é maior ou
-                             igual a 0.5. Se estamos medindo a correlação com o 
-                             r de Pearson, uma correlação de no mínimo 0.5 
-                             indica que ambas as variáveis compartilham pelo 
-                             menos 25% de sua variância."),
-                             
-                             h6("Conseguimos o valor de pelo menos 25% 
-                             multiplicando o valor da correlação r por ele mesmo
-                             (r*r = r²). Assim, se 
-                             r = 0.5, r² = 0.5 * 0.5 = 0.25."),
                              
                              h6("Quando a correlação for maior ou igual a 0.9,
                                 quase toda a variância entre as duas 
