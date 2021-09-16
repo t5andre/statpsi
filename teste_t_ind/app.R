@@ -74,7 +74,7 @@ ui <- fluidPage(
     ),
     fluidRow(
         column(
-        8,
+        12,
             
             
             h4(
@@ -127,15 +127,15 @@ ui <- fluidPage(
 
 server <- function(input, output) {
     df <- reactive(data.frame(
-        medias = c(rnorm(
-            n = input$n1,
-            mean = input$media1,
-            sd = input$dp1
+        medias = c(input$media1+input$dp1*scale(
+            rnorm(
+            n = input$n1
+            )
             ),
-          rnorm(
-              n = input$n2,
-              mean = input$media2,
-              sd = input$dp2
+            input$media2+input$dp2*scale(
+              rnorm(
+              n = input$n2
+              )
               )
           ),
         grupos = factor(
@@ -209,22 +209,19 @@ server <- function(input, output) {
                              yend = Inf),
                          linetype = 5,
                          size = 1.1) +
-            geom_text(aes(x = (mean(df()[df()[,2] == 1,1]) + mean(df()[df()[,2] == 2,1]))/2,
-                          y = Inf,
-                          label = paste0("d = ",
+            annotate(geom = "text", x = (mean(df()[df()[,2] == 1,1]) + mean(df()[df()[,2] == 2,1]))/2,
+                     y = Inf, label = paste0("d = ",
                                              round(abs(
                                                  mean(
                                                      df()[df()[,2] == 1,1]) -
                                                      mean(
                                                          df()[df()[,2] == 2,1])
-                                                 )/sqrt((sd(
-                                                     df()[df()[,2] == 1,1])^2 +
-                                                        sd(
-                                                            df()[df()[,2] == 2,1])^2)/2),
+                                             )/sqrt((sd(
+                                                 df()[df()[,2] == 1,1])^2 +
+                                                     sd(
+                                                         df()[df()[,2] == 2,1])^2)/2),
                                              2)
-                                            )
-                                         ),
-                      vjust = 2) +
+                     ),vjust = 2, size = 5)  +
             scale_fill_manual(values = c("#006495","#bd3022")) +
             labs(x = "Escores", y = "") +
             xlim(c(ifelse(mean(df()[df()[,2] == 1,1]) <= mean(df()[df()[,2] == 2,1]),
@@ -253,8 +250,9 @@ server <- function(input, output) {
                    "Graus_de_Liberdade" = 
                        c(levtest$Df[[1]],teste_t_ind$parameter),
                    "p" = 
-                       c(levtest$`Pr(>F)`[[1]],teste_t_ind$p.value))
-    }, digits = 4, na = "")
+                       c(ifelse(levtest$`Pr(>F)`[[1]] < .001, "< 0.001", round(levtest$`Pr(>F)`[[1]],3)),
+                         ifelse(teste_t_ind$p.value < .001, "< 0.001", round(teste_t_ind$p.value,3) )))
+    }, digits = 3, na = "")
     
 }
 

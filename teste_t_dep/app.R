@@ -95,15 +95,15 @@ ui <- fluidPage(
 
 server <- function(input, output) {
     df <- reactive(data.frame(
-        medias = c(rnorm(
-            n = input$n,
-            mean = input$media1,
-            sd = input$dp1
+        medias = c(input$media1+input$dp1*scale(
+            rnorm(
+            n = input$n
+        )
         ),
-        rnorm(
-            n = input$n,
-            mean = input$media2,
-            sd = input$dp2
+        input$media2+input$dp2*scale(
+            rnorm(
+            n = input$n
+        )
         )
         ),
         grupos = factor(
@@ -116,9 +116,7 @@ server <- function(input, output) {
                     2,
                     input$n)
             )
-        ),
-        id = c(1:input$n,
-            1:input$n)
+        )
         )
     )
 
@@ -175,6 +173,17 @@ server <- function(input, output) {
                            y = df()$grupos,
                            colour = df()$grupos),
                        alpha = 0.6) +
+            annotate(geom = "text", y = 1.5,
+                     x = Inf, label = paste0("d = ",
+                                             round(abs(
+                                                 mean(
+                                                     df()[df()$grupos == 1,1]) -
+                                                     mean(
+                                                         df()[df()$grupos == 2,1])
+                                             )/sd(df()[df()$grupos == 1,1] -
+                                                  df()[df()$grupos == 2,1]),
+                                             2)
+                     ),vjust = 3, size = 5)+
             coord_flip() +
             geom_segment(aes(x = df()[df()$grupos == 1,1], xend = df()[df()$grupos == 2,1],
                              y = df()[df()$grupos == 1,2], yend = df()[df()$grupos == 2,2]),
@@ -193,8 +202,11 @@ server <- function(input, output) {
         data.frame("Dif_Médias" = teste_t_dep$estimate[[1]],
                    "Estatística_teste" = teste_t_dep$statistic,
                    "Graus_de_Liberdade" = teste_t_dep$parameter,
-                   "p" = teste_t_dep$p.value)
-    }, digits = 4)
+                   "p" = ifelse(
+                       teste_t_dep$p.value < .001,
+                       "< 0.001",
+                       round(teste_t_dep$p.value,3)))
+    }, digits = 3)
     
 }
 
